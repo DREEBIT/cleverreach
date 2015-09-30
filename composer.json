@@ -1,0 +1,29 @@
+{
+  "name": "dreebit/cleverreach",
+  "description": "A contao module to subscribe or unsubscribe on cleverreach.de",
+  "keywords": ["contao", "cleverreach"],
+  "type": "contao-module",
+  "homepage": "https://www.dreebit-service.eu",
+  "license": "LGPL-3.0+",
+  "authors":[
+    {
+      "name":"Nico Ziegler",
+      "homepage":"https://www.dreebit-service.eu",
+      "role":"Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.3",
+    "contao/core":">=3.2,<4.0"
+  },
+  "autoload":{
+    "classmap":[""]
+  },
+  "extra":{
+    "contao": {
+      "sources": {
+        "": "system/modules/dreebit_cleverreach"
+      }
+    }
+  }
+}
