@@ -14,8 +14,12 @@ use Dreebit\CleverReach;
 /**
  * Add palettes to tl_module
  */
+$GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'clr_unsubscribe';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['clr_subscribe']   = '{title_legend},name,headline,type;{config_legend},clr_groups,clr_form;{redirect_legend},jumpTo;{template_legend:hide},clr_template,customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
-$GLOBALS['TL_DCA']['tl_module']['palettes']['clr_unsubscribe'] = '{title_legend},name,headline,type;{config_legend},clr_groups;{redirect_legend},jumpTo;{template_legend:hide},clr_template,customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['clr_unsubscribe'] = '{title_legend},name,headline,type;{config_legend},clr_unsubscribe;{redirect_legend},jumpTo;{protected_legend:hide},protected;';
+$GLOBALS['TL_DCA']['tl_module']['subpalettes']['clr_unsubscribe_inactive'] = 'clr_groups';
+$GLOBALS['TL_DCA']['tl_module']['subpalettes']['clr_unsubscribe_delete'] = 'clr_groups';
+$GLOBALS['TL_DCA']['tl_module']['subpalettes']['clr_unsubscribe_email'] = 'clr_form';
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['clr_groups'] = array
 (
@@ -25,6 +29,19 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['clr_groups'] = array
 	'options_callback'        => array('tl_module_clr', 'getGroups'),
 	'eval'                    => array('multiple'=>true, 'mandatory'=>true),
 	'sql'                     => "blob NULL"
+);
+
+$GLOBALS['TL_DCA']['tl_module']['fields']['clr_unsubscribe'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['clr_unsubscribe'],
+	'default'                 => 'inactive',
+	'exclude'                 => true,
+	'filter'                  => true,
+	'inputType'               => 'select',
+	'options'                 => array('inactive', 'delete', 'email'),
+	'reference'               => &$GLOBALS['TL_LANG']['tl_module']['clr_unsubscribe'],
+	'eval'                    => array('submitOnChange'=>true, 'helpwizard'=>true),
+	'sql'                     => "varchar(12) NOT NULL default ''"
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['clr_form'] = array

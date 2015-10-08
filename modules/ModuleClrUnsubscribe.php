@@ -82,9 +82,24 @@ class ModuleClrUnsubscribe extends \Module
 
 		$objCleverReach = new CleverReach();
 
-		foreach ($this->clr_groups AS $strGroupId)
+		switch ($this->clr_unsubscribe)
 		{
-			$objCleverReach->receiverSetInactive($varInput, $strGroupId);
+			case 'inactive':
+				foreach ($this->clr_groups AS $strGroupId)
+				{
+					$objCleverReach->receiverSetInactive($varInput, $strGroupId);
+				}
+				break;
+			case 'delete':
+				foreach ($this->clr_groups AS $strGroupId)
+				{
+					$objCleverReach->receiverDelete($varInput, $strGroupId);
+				}
+				break;
+			case 'email':
+			default:
+				$objCleverReach->sendUnsubscribeMail($varInput, $this->clr_form);
+				break;
 		}
 
 		$this->redirect($this->generateFrontendUrl($this->objModel->getRelated('jumpTo')->row()));

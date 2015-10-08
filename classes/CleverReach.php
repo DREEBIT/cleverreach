@@ -180,6 +180,37 @@ class CleverReach extends Backend
 
 
 	/**
+	 * @param string $strEmail
+	 * @param int $intFormId
+	 *
+	 * @return bool
+	 */
+	public function sendUnsubscribeMail($strEmail, $intFormId)
+	{
+		if ($this->soap)
+		{
+			$objReturn = $this->soap->formsSendUnsubscribeMail($this->apiKey, $intFormId, $strEmail);
+
+			if ($objReturn->status == 'SUCCESS')
+			{
+				$this->log('E-Mail erfolgreich versendet an ' . $strEmail . ' - ' . $objReturn->message, 'CleverReach::sendUnsubscribeMail', TL_NEWSLETTER);
+				return true;
+			}
+			else
+			{
+				$this->log('Fehler beim versenden an ' . $strEmail . ' - ' . $objReturn->message, 'CleverReach::sendUnsubscribeMail', TL_ERROR);
+				return false;
+			}
+		}
+		else
+		{
+			$this->log('Fehler beim versenden an ' . $strEmail . ' - Keine Verbindung zur SOAP-Schnittstelle', 'CleverReach::sendUnsubscribeMail', TL_ERROR);
+			return false;
+		}
+	}
+
+
+	/**
 	 * @return array
 	 */
 	public function getGroupList()
